@@ -1,12 +1,15 @@
 import re
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from store.models import Product
 
+
 def say_hello(request):
-   queryset = Product.objects.all()
-   
-   for product in queryset:
+   try:
+      product = Product.objects.get(pk=1)
       print(product)
+   except ObjectDoesNotExist:
+      pass
    
    return render(request, 'hello.html', {'name': 'Mosh'})
