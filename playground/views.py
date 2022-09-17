@@ -6,16 +6,21 @@ from django.db.models import Q, F, Value, Func, ExpressionWrapper, DecimalField
 from django.db.models.aggregates import Count, Max, Min, Avg, Sum
 from django.db.models.functions import Concat
 from django.contrib.contenttypes.models import ContentType
-from store.models import Product, OrderItem, Order, Customer
+from store.models import Collection, Product, OrderItem, Order, Customer
 from tags.models import TaggedItem
 
 
 
 def say_hello(request):
    
-   queryset = TaggedItem.objects.get_tags_for(Product, 5)
+   collection = Collection()
+   collection.title = 'Video Games'
+   collection.featured_product = Product(pk=1)
+   collection.save()
+   print(collection.id)
    
+   # Collection.objects.create(name='A', featured_product_id=1)
+      
    return render(request, 'hello.html', {
-      'name': 'Mosh', 
-      'result': list(queryset)
+      'name': 'Mosh'
    })
