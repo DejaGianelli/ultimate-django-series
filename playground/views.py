@@ -13,12 +13,6 @@ from tags.models import TaggedItem
 
 def say_hello(request):
    
-   # queryset = Product.objects.raw('SELECT * FROM store_product')
-   
-   with connection.cursor() as cursor:
-      # cursor.callproc('get_customers', [1, 2, 'a'])
-      cursor.execute('SELECT * FROM store_product')
-   
    return render(request, 'hello.html', {
       'name': 'Mosh'
    })
