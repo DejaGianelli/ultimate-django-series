@@ -4,45 +4,20 @@ from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q, F, Value, Func, ExpressionWrapper, DecimalField
 from django.db.models.aggregates import Count, Max, Min, Avg, Sum
+from django.db import connection
 from django.db.models.functions import Concat
 from django.contrib.contenttypes.models import ContentType
 from django.db import transaction
 from store.models import Collection, Product, OrderItem, Order, Customer
 from tags.models import TaggedItem
 
-# @transaction.atomic
-# def say_hello(request):
-   
-#    order = Order()
-#    order.customer_id = 1
-#    order.save()
-   
-#    item = OrderItem()
-#    item.order = order
-#    item.product_id = 1
-#    item.quantity = 1
-#    item.unit_price = 10
-#    item.save()
-   
-#    return render(request, 'hello.html', {
-#       'name': 'Mosh'
-#    })
-
 def say_hello(request):
    
-   # ...
+   # queryset = Product.objects.raw('SELECT * FROM store_product')
    
-   with transaction.atomic():
-      order = Order()
-      order.customer_id = 1
-      order.save()
-      
-      item = OrderItem()
-      item.order = order
-      item.product_id = -1
-      item.quantity = 1
-      item.unit_price = 10
-      item.save()
+   with connection.cursor() as cursor:
+      # cursor.callproc('get_customers', [1, 2, 'a'])
+      cursor.execute('SELECT * FROM store_product')
    
    return render(request, 'hello.html', {
       'name': 'Mosh'
