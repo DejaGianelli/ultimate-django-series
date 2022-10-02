@@ -1,9 +1,15 @@
-from django.urls import path
+from django.urls import include, path
+from rest_framework.routers import SimpleRouter, DefaultRouter
 from . import views
+from pprint import pprint
 
-urlpatterns = [
-    path('collections/', views.CollectionList.as_view()),
-    path('collections/<int:pk>/', views.CollectionDetail.as_view(), name='collection-detail'),
-    path('products/', views.ProductList.as_view()),
-    path('products/<int:pk>/', views.ProductDetail.as_view())
-]
+# router = SimpleRouter()
+router = DefaultRouter()
+router.register('products', views.ProductViewSet)
+router.register('collections', views.CollectionViewSet)
+
+# Url Conf
+# urlpatterns = [
+#     path('', include(router.urls))
+# ]
+urlpatterns = router.urls
